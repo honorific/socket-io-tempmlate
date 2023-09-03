@@ -8,12 +8,12 @@ function App() {
   const [room, setRoom] = useState('')
 
   const sendMessage = () => {
-    socket.emit('send-message', {message})
+    socket.emit('send-message', {message, room})
   }
 
   const joinRoom = () => {
-    if(room !== "") {
-      socket.emit("join_room", room)
+    if (room !== '') {
+      socket.emit('join_room', room)
     }
   }
   useEffect(() => {
@@ -21,18 +21,29 @@ function App() {
       setMessageReceived(data.message)
     })
   }, [socket])
+
   return (
     <div className='App'>
+      <input
+        type='text'
+        placeholder='room number'
+        onChange={(e) => setRoom(e.target.value)}
+      />
+      <button onClick={joinRoom}>join Room</button>
+      <br />
+      <br />
+
       <input
         type='text'
         placeholder='message...'
         onChange={(e) => setMessage(e.target.value)}
       />
       <button onClick={sendMessage}>Send</button>
-      <span>
+
+      <h3>
         <b>Message:</b>
-      </span>
-      <span>{messageReceived}</span>
+      </h3>
+      <h3>{messageReceived}</h3>
     </div>
   )
 }
