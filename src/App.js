@@ -5,10 +5,17 @@ const socket = io.connect('http://localhost:3001')
 function App() {
   const [message, setMessage] = useState('')
   const [messageReceived, setMessageReceived] = useState('')
+  const [room, setRoom] = useState('')
+
   const sendMessage = () => {
     socket.emit('send-message', {message})
   }
 
+  const joinRoom = () => {
+    if(room !== "") {
+      socket.emit("join_room", room)
+    }
+  }
   useEffect(() => {
     socket.on('receive_message', (data) => {
       setMessageReceived(data.message)
