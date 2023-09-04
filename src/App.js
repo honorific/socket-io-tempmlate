@@ -22,6 +22,7 @@ function App() {
   }
   useEffect(() => {
     socket.on('receive_message', (data) => {
+      console.log('initial data:', data)
       setMessageReceived((prev) => [...prev, data])
     })
     socket.on('show_message', (data, own) => {
